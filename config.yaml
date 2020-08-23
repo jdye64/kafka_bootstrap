@@ -21,5 +21,5 @@ kafka_group: kafka
 
 # Kafka server.properties
 kafka_listeners: PLAINTEXT://:9092
-kafka_log.dirs: /opt/kafka/kafka_2.12-2.6.0/kafka-logs
-kafka_zookeeper.connect: localhost:2181
+kafka_log_dirs: /opt/kafka/kafka_2.12-2.6.0/kafka-logs
+kafka_zookeeper_connect: localhost:2181
