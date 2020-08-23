@@ -36,6 +36,10 @@ def download_and_extract(service_name, conf_prefix):
 def configure_service(service_name, conf_prefix, conf_files):
     print("Configuring service " + service_name)
 
+    # Create the user and group for the service
+    os.system("groupadd " + config_data[conf_prefix + '_group'])
+    os.system("useradd -g " + config_data[conf_prefix + '_group'] + " " + config_data[conf_prefix + '_user'])
+
     for conf_file in conf_files:
         c_in_file = os.path.join(conf_prefix, conf_file)
         c_out_file = os.path.join(config_data[conf_prefix + "_extract_dir"], conf_file)
@@ -43,6 +47,9 @@ def configure_service(service_name, conf_prefix, conf_files):
         f = open(c_out_file, "w")
         f.write(cf)
         f.close()
+
+    # Modify the permissions of the install director to be the same user and group as the service will run under
+    os.system("chmod -R " + config_data[conf_prefix + '_user'] + ":" + config_data[conf_prefix + '_group'] + " " + config_data[conf_prefix + "_extract_dir"])
 
 def install_and_start_service(service_name, conf_prefix):
     print("Installing service via systemd")
