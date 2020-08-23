@@ -8,9 +8,10 @@ After=network.target
 Type=forking
 User={{ zk_user }}
 Group={{ zk_group }}
-ExecStart=/opt/zookeeper/latest/bin/zkServer.sh start /opt/zookeeper/latest/conf/zoo.cfg
-ExecStop=/opt/zookeeper/latest/bin/zkServer.sh stop /opt/zookeeper/latest/conf/zoo.cfg
-ExecReload=/opt/zookeeper/latest/bin/zkServer.sh restart /opt/zookeeper/latest/conf/zoo.cfg
+Environment=JAVA_HOME={{ java_home }}
+ExecStart={{ zookeeper_extract_dir }}/bin/zkServer.sh start {{ zookeeper_extract_dir }}/conf/zoo.cfg
+ExecStop={{ zookeeper_extract_dir }}/bin/zkServer.sh stop {{ zookeeper_extract_dir }}/conf/zoo.cfg
+ExecReload={{ zookeeper_extract_dir }}/bin/zkServer.sh restart {{ zookeeper_extract_dir }}/conf/zoo.cfg
 
 [Install]
 WantedBy=multi-user.target

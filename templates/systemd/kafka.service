@@ -6,11 +6,11 @@ After=network.target remote-fs.target zookeeper.service
 
 [Service]
 Type=simple
-User=kafka
-Group=kafka
-Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
-ExecStart=/opt/kafka/latest/bin/kafka-server-start.sh /opt/kafka/latest/config/server-1.properties
-ExecStop=/opt/kafka/latest/bin/kafka-server-stop.sh
+User={{ kafka_user }}
+Group={{ kafka_group }}
+Environment=JAVA_HOME={{ java_home }}
+ExecStart={{ kafka_extract_dir }}/bin/kafka-server-start.sh {{ kafka_extract_dir }}/config/server-1.properties
+ExecStop={{ kafka_extract_dir }}/bin/kafka-server-stop.sh
 
 [Install]
 WantedBy=multi-user.target

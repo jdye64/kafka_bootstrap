@@ -1,3 +1,6 @@
+# System Configurations
+java_home: /usr/lib/jvm/java-1.8.0-openjdk-amd64
+
 # Zookeeper Configurations
 zookeeper_version: 3.6.1
 zookeeper_download_url: http://apache.mirrors.hoobly.com/zookeeper/zookeeper-3.6.1/apache-zookeeper-3.6.1-bin.tar.gz
