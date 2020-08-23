@@ -49,7 +49,7 @@ def configure_service(service_name, conf_prefix, conf_files):
         f.close()
 
     # Modify the permissions of the install director to be the same user and group as the service will run under
-    os.system("chmod -R " + config_data[conf_prefix + '_user'] + ":" + config_data[conf_prefix + '_group'] + " " + config_data[conf_prefix + "_extract_dir"])
+    os.system("chown -R " + config_data[conf_prefix + '_user'] + ":" + config_data[conf_prefix + '_group'] + " " + config_data[conf_prefix + "_extract_dir"])
 
 def install_and_start_service(service_name, conf_prefix):
     print("Installing service via systemd")
