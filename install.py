@@ -64,7 +64,7 @@ def install_and_start_service(service_name, conf_prefix):
     os.system('systemctl start ' + conf_prefix)
 
 def test_kafka_install():
-    kafka_list_topics = os.join(os.join(config_data["kafka_extract_dir"], "bin"), "kafka-topics.sh --list --zookeeper localhost:2181")
+    kafka_list_topics = os.path.join(os.path.join(config_data["kafka_extract_dir"], "bin"), "kafka-topics.sh --list --zookeeper localhost:2181")
     stream = os.popen(kafka_list_topics)
     resp = stream.read()
     print("List topic resp: " + str(resp))
