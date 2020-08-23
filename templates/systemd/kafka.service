@@ -9,7 +9,7 @@ Type=simple
 User={{ kafka_user }}
 Group={{ kafka_group }}
 Environment=JAVA_HOME={{ java_home }}
-ExecStart={{ kafka_extract_dir }}/bin/kafka-server-start.sh {{ kafka_extract_dir }}/config/server-1.properties
+ExecStart={{ kafka_extract_dir }}/bin/kafka-server-start.sh {{ kafka_extract_dir }}/config/server.properties
 ExecStop={{ kafka_extract_dir }}/bin/kafka-server-stop.sh
 
 [Install]

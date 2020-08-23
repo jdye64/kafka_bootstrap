@@ -8,9 +8,18 @@ zookeeper_base_dir: /opt/zookeeper
 zookeeper_user: zookeeper
 zookeeper_group: zookeeper
 
+# Zookeeper zoo.cfg
+zookeeper_dataDir: /opt/zookeeper/latest/data
+zookeeper_clientPort: 2181
+
 # Kafka Configurations
 kafka_version: 2.5.0
 kafka_download_url: http://apache.mirrors.hoobly.com/kafka/2.6.0/kafka_2.12-2.6.0.tgz
 kafka_base_dir: /opt/kafka
 kafka_user: kafka
 kafka_group: kafka
+
+# Kafka server.properties
+kafka_listeners: PLAINTEXT://:9092
+kafka_log.dirs: /opt/kafka/kafka_2.12-2.6.0/kafka-logs
+kafka_zookeeper.connect: localhost:2181

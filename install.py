@@ -63,9 +63,14 @@ def install_and_start_service(service_name, conf_prefix):
     print("Starting SystemD service")
     os.system('systemctl start ' + conf_prefix)
 
+def test_kafka_install():
+    kafka_list_topics = os.join(os.join(config_data["kafka_extract_dir"], "bin"), "kafka-topics.sh --list --zookeeper localhost:2181")
+    stream = os.popen(kafka_list_topics)
+    resp = stream.read()
+    print("List topic resp: " + str(resp))
+
 def seed_data():
     print("Data will be seeded to Kafka if configured for that to happen")
-
 
 if __name__ == "__main__":
     # Prepare environment
@@ -82,5 +87,7 @@ if __name__ == "__main__":
     install_and_start_service("Zookeeper", "zookeeper")
     # Install and start Kafka
     install_and_start_service("Kafka", "kafka")
+    # Test Kafka install
+    test_kafka_install()
     # Seed Kafka data
     seed_data()
