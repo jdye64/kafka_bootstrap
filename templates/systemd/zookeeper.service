@@ -1,0 +1,16 @@
+[Unit]
+Description=ZooKeeper Service
+Documentation=http://zookeeper.apache.org
+Requires=network.target
+After=network.target
+
+[Service]
+Type=forking
+User={{ zk_user }}
+Group={{ zk_group }}
+ExecStart=/opt/zookeeper/latest/bin/zkServer.sh start /opt/zookeeper/latest/conf/zoo.cfg
+ExecStop=/opt/zookeeper/latest/bin/zkServer.sh stop /opt/zookeeper/latest/conf/zoo.cfg
+ExecReload=/opt/zookeeper/latest/bin/zkServer.sh restart /opt/zookeeper/latest/conf/zoo.cfg
+
+[Install]
+WantedBy=multi-user.target
