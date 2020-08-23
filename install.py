@@ -18,6 +18,10 @@ def download_and_extract(service_name, conf_prefix):
     if os.path.exists(download_path):
         print(service_name + " is already downloaded at: " + download_path + " ... skipping")
     else:
+        # Create the base_dir if it does not exist
+        if not os.path.exists(config_data[conf_prefix + '_base_dir']):
+            os.system("mkdir -p " + config_data[conf_prefix + '_base_dir'])
+
         print("Downloading: '" + config_data[conf_prefix + "_download_url"] + "' to: '" + download_path + "'")
         urllib.request.urlretrieve(config_data[conf_prefix + '_download_url'], download_path)
         tar = tarfile.open(download_path, "r:gz")
