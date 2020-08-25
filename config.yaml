@@ -1,5 +1,7 @@
 # System Configurations
 java_home: /usr/lib/jvm/java-1.8.0-openjdk-amd64
+kerberos_enabled: true
+ssl_enabled: true
 
 # Zookeeper Configurations
 zookeeper_version: 3.6.1
@@ -20,6 +22,23 @@ kafka_user: kafka
 kafka_group: kafka
 
 # Kafka server.properties
-kafka_listeners: PLAINTEXT://:9092
+kafka_listeners: PLAINTEXT://:9092,SSL://:9093,SASL_SSL://:9094
+kafka_advertised_listeners: PLAINTEXT://kafka.localdomain:9092,SSL://kafka.localdomain:9093,SASL_SSL://kafka.localdomain:9094
+
 kafka_log_dirs: /opt/kafka/kafka_2.12-2.6.0/kafka-logs
 kafka_zookeeper_connect: localhost:2181
+
+# Kafka SSL
+kafka_ssl_endpoint_identification_algorithm:
+kafka_ssl_enabled_protocols: TLSv1.2,TLSv1.1,TLSv1
+kafka_ssl_keystore_location: kafka.keystore.jks
+kafka_ssl_keystore_password: something
+kafka_ssl_truststore_location: kafka.truststore.jks
+kafka_ssl_truststore_password: something
+
+# Kafka SASL
+kafka_sasl_enabled_mechanisms: GSSAPI
+kafka_sasl_kerberos_service_name: kafka
+kafka_authorizer_class_name: kafka.security.auth.SimpleAclAuthorizer
+kafka_super_users: User:admin;User:kafka
+kafka_sasl_mechanism_inter_broker_protocol: GSSAPI

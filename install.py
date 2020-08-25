@@ -10,7 +10,17 @@ env = Environment(loader = FileSystemLoader('./templates'), trim_blocks=True, ls
 
 # Make sure the needed dependencies for this script and running Zookeeper and Kafka are present
 def env_prep():
-    print("Prepping environment for installer")
+    if config_data['kerberos_enabled'] == 'true':
+        print("----- Kerberos Enabled -----")
+        os.system("apt install krb5-kdc krb5-admin-server krb5-user")
+
+    if config_data["ssl_enabled"] == "true":
+        print("----- SSL Enabled -----")
+        ssl_cmd = f"keytool -keystore kafka.server.keystore.jks -alias localhost " \
+                  f"-keyalg RSA -validity {validity} -genkey -storepass {keystore-pass} " \
+                  f"-keypass {key-pass} -dname {distinguished-name} -ext SAN=DNS:{hostname}"
+        print("SSL Command: " + str(ssl_cmd))
+
 
 # Download and extract the service binaries to the configured location
 def download_and_extract(service_name, conf_prefix):
@@ -71,7 +81,7 @@ def install_and_start_service(service_name, conf_prefix):
     os.system('systemctl start ' + conf_prefix)
 
 def test_kafka_install():
-    kafka_list_topics = os.path.join(os.path.join(config_data["kafka_extract_dir"], "bin"), "kafka-topics.sh --list --zookeeper localhost:2181")
+    kafka_list_topics = os.path.join(os.path.join(config_data["kafka_extract_dir"], "bin"), "kafka-topics.sh --list --bootstrap-server localhost:2181")
     stream = os.popen(kafka_list_topics)
     resp = stream.read()
     print("List topic resp: " + str(resp))
@@ -89,7 +99,7 @@ if __name__ == "__main__":
     # Configure Zookeeper
     configure_service("Zookeeper", "zookeeper", ['conf/zoo.cfg', 'conf/log4j.properties'])
     # Configure Kafka
-    configure_service("Kafka", "kafka", ['config/server.properties'])
+    configure_service("Kafka", "kafka", ['config/server.properties', 'config/kafka_server_jaas.conf'])
     # Install and start Zookeeper
     install_and_start_service("Zookeeper", "zookeeper")
     # Install and start Kafka
